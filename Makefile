@@ -13,7 +13,7 @@ make:
 install:
 	mkdir -p ${DESTDIR}
 	cp -f ozhegov.dict ozhegov.index ${DESTDIR}
-	@echo "Don't forget to restart dictd"
+	@echo "Don't forget to add those files to dictd config and to restart dictd"
 
 uninstall:
 	rm -f ${DESTDIR}ozhegov.index ${DESTDIR}ozhegov.dict
