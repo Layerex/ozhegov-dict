@@ -1,24 +1,38 @@
 ##
-#
 # ozhegov-dict
 #
 # @version 0.1
 
-DESTDIR = /usr/local/share/dict/
+DESTDIR = /usr/local/share/dict
+CONFIG_FILE = /etc/dict/dictd.conf
+DICTNAME = ozhegov
+DICTNAME_FULL = "Словарь Ожегова"
+DICTFILE = ${DICTNAME}_dict.txt
+
+DOWNLOAD_DIR = data
+
+define CONFIG
+database ${DICTNAME} {
+  data  ${DESTDIR}/${DICTNAME}.dict
+  index ${DESTDIR}/${DICTNAME}.index
+}
+endef
+export CONFIG
 
 make:
-	python3 ozhegov-parse.py > ozhegov_dict.txt
-	dictfmt --utf8 --allchars -s "Словарь Ожегова" -j ozhegov < ozhegov_dict.txt
+	python3 ozhegov-parse.py > ${DICTFILE}
+	dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME} < ${DICTFILE}
 
 install:
 	mkdir -p ${DESTDIR}
-	cp -f ozhegov.dict ozhegov.index ${DESTDIR}
-	@echo "Don't forget to add those files to dictd config and to restart dictd"
+	cp -f ${DICTNAME}.dict ${DICTNAME}.index ${DESTDIR}
+	@echo "Don't forget to add following to dictd config(usually ${CONFIG_FILE}) and to restart dictd."
+	@echo "$$CONFIG"
 
 uninstall:
-	rm -f ${DESTDIR}ozhegov.index ${DESTDIR}ozhegov.dict
+	rm -f ${DESTDIR}/${DICTNAME}.index ${DESTDIR}/${DICTNAME}.dict
 
 clean:
-	rm -f ozhegov_dict.txt ozhegov.dict ozhegov.index
+	rm -f ${DICTNAME}_dict.txt ${DICTNAME}.dict ${DICTNAME}.index
 
 # end
