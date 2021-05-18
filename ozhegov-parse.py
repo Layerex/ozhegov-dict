@@ -2,11 +2,11 @@
 
 import re
 import csv
-from sys import stdout
+from sys import stdout, argv
 
 
 def main():
-    with open("ozhegov.txt") as f:
+    with open(argv[1]) as f:
         with stdout as out:
             reader = csv.reader(f, delimiter="|")
 
