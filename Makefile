@@ -27,7 +27,7 @@ make:
 install:
 	mkdir -p ${DESTDIR}
 	cp -f ${DICTNAME}.dict ${DICTNAME}.index ${DESTDIR}
-	@echo "Don't forget to add following to dictd config(usually ${CONFIG_FILE}) and to restart dictd."
+	@echo "Don't forget to add following to dictd config (usually ${CONFIG_FILE}) and to restart dictd."
 	@echo "$$CONFIG"
 
 uninstall:
