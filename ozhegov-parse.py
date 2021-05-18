@@ -10,7 +10,7 @@ def main():
         with stdout as out:
             reader = csv.reader(f, delimiter="|")
 
-            for row in reader:
+            for row in list(reader)[1:]:
                 out.write(f":{row[0].strip()}:")
                 for col in row[2:]:
                     if col and col != "+":
