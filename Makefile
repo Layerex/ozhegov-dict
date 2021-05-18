@@ -33,6 +33,6 @@ uninstall:
 	rm -f ${DESTDIR}/${DICTNAME}.index ${DESTDIR}/${DICTNAME}.dict
 
 clean:
-	rm -f ${DICTNAME}_dict.txt ${DICTNAME}.dict ${DICTNAME}.index
+	rm -f ${DICTFILE} ${DICTNAME}.dict ${DICTNAME}.index
 
 # end
