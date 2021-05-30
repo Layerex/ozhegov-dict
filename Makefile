@@ -24,7 +24,7 @@ make:
 	python3 ozhegov-parse.py ${DICTSOURCE} > ${DICTFILE}
 	dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME} < ${DICTFILE}
 
-install:
+install: make
 	mkdir -p ${DESTDIR}
 	cp -f ${DICTNAME}.dict ${DICTNAME}.index ${DESTDIR}
 	@echo "Don't forget to add following to dictd config (usually ${CONFIG_FILE}) and to restart dictd."

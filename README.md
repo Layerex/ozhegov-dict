@@ -5,7 +5,6 @@
 ## Установка
 
 ```sh
-make
 sudo make install
 ```
 
