@@ -4,6 +4,27 @@ import csv
 import re
 from sys import argv, stdout
 
+abbreviations = {
+    "Admin": "офиц.",
+    "Anti": "противоп.",
+    "Arch": "стар.",
+    "Colloq": "разг.",
+    "Deprec": "презр.",
+    "Indic": "указ.",
+    "Iron": "ирон.",
+    "Jest": "шутл.",
+    "Lib": "книжн.",
+    "Maxime": "преимущ.",
+    "Non-st": "прост.",
+    "Obs": "устар.",
+    "Ordin": "числ.",
+    "Pejor": "неодобр.",
+    "Poet": "поэт.",
+    "Primo": "первонач.",
+    "Regio": "обл.",
+    "Spec": "спец.",
+}
+
 
 def convert_n_notation(string: str) -> str:
     """
@@ -32,6 +53,8 @@ def main():
 
             for row in list(reader)[1:]:
                 out.write(f":{row[0].strip()}:")
+
+                cols = []
                 for col in row[2:]:
                     if col and col != "+":
                         col = re.sub(
@@ -39,14 +62,9 @@ def main():
                             lambda match: convert_n_notation(match.group(1)),
                             col,
                         )
-                        # TODO:
-                        # col.replace("Spec", "(спец.)")
-                        # col.replace("Pejor", "(неодобр.)")
-                        # col.replace("Colloc", "(разг.)")
-                        # col.replace("Lib", "(книжн.)")
-                        # col.replace("Non-st", "(прост.)")
-                        # col.replace("Regio", "(обл.)")
-                        cols.append(col)
+                        for k, v in abbreviations.items():
+                            col = col.replace(k, v)
+                        cols.append(col.strip())
                 out.write(" ".join(cols) + "\n")
 
 
