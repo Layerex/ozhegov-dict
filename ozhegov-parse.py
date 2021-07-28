@@ -46,8 +46,8 @@ def main():
                         # col.replace("Lib", "(книжн.)")
                         # col.replace("Non-st", "(прост.)")
                         # col.replace("Regio", "(обл.)")
-                        out.write(col.strip() + " ")
-                out.write("\n")
+                        cols.append(col)
+                out.write(" ".join(cols) + "\n")
 
 
 if __name__ == "__main__":
