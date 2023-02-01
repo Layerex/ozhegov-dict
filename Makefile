@@ -1,8 +1,3 @@
-##
-# ozhegov-dict
-#
-# @version 0.1
-
 DESTDIR = /usr/local/share/dict
 CONFIG_FILE = /etc/dict/dictd.conf
 DICTNAME = ozhegov
