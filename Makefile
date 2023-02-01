@@ -2,7 +2,6 @@ DESTDIR = /usr/local/share/dict
 CONFIG_FILE = /etc/dict/dictd.conf
 DICTNAME = ozhegov
 DICTNAME_FULL = "Словарь Ожегова"
-DICTFILE = ${DICTNAME}_dict.txt
 DICTSOURCE = ${DICTNAME}.txt
 
 DOWNLOAD_DIR = data
@@ -16,8 +15,7 @@ endef
 export CONFIG
 
 make:
-	python3 ozhegov-parse.py ${DICTSOURCE} > ${DICTFILE}
-	dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME} < ${DICTFILE}
+	python3 ozhegov-parse.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
 
 install: make
 	mkdir -p ${DESTDIR}
@@ -29,6 +27,6 @@ uninstall:
 	rm -f ${DESTDIR}/${DICTNAME}.index ${DESTDIR}/${DICTNAME}.dict
 
 clean:
-	rm -f ${DICTFILE} ${DICTNAME}.dict ${DICTNAME}.index
+	rm -f ${DICTNAME}.dict ${DICTNAME}.index
 
 # end
