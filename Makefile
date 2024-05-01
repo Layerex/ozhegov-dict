@@ -4,8 +4,6 @@ DICTNAME = ozhegov
 DICTNAME_FULL = "Словарь Ожегова"
 DICTSOURCE = ${DICTNAME}.txt
 
-DOWNLOAD_DIR = data
-
 define CONFIG
 database ${DICTNAME} {
   data  ${DESTDIR}/${DICTNAME}.dict
