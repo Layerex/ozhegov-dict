@@ -12,7 +12,7 @@ database ${DICTNAME} {
 endef
 export CONFIG
 
-make:
+make: ${DICTSOURCE}
 	python3 ozhegov-parse.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
 
 install: ${DICTNAME}.index ${DICTNAME}.dict
