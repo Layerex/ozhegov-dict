@@ -47,25 +47,41 @@ def convert_n_notation(string: str) -> str:
 
 
 def main():
+    slob_format = len(argv) in (3, 4)
+    if slob_format:
+        import slob
+
+    entries = []
+
     with open(argv[1]) as f:
-        with stdout as out:
-            reader = csv.reader(f, delimiter="|")
+        reader = csv.reader(f, delimiter="|")
 
-            for row in list(reader)[1:]:
-                out.write(f":{row[0].strip()}:")
+        for row in list(reader)[1:]:
+            word = row[0].strip()
 
-                cols = []
-                for col in row[2:]:
-                    if col and col != "+":
-                        col = re.sub(
-                            "(N([0-9]+\/?)*)",
-                            lambda match: convert_n_notation(match.group(1)),
-                            col,
-                        )
-                        for k, v in abbreviations.items():
-                            col = col.replace(k, v)
-                        cols.append(col.strip())
-                out.write(" ".join(cols) + "\n")
+            cols = []
+            for col in row[2:]:
+                if col and col != "+":
+                    col = re.sub(
+                        "(N([0-9]+\/?)*)",
+                        lambda match: convert_n_notation(match.group(1)),
+                        col,
+                    )
+                    for k, v in abbreviations.items():
+                        col = col.replace(k, v)
+                    cols.append(col.strip())
+            definition = " ".join(cols) + "\n"
+            entries.append((word, definition))
+
+        if slob_format:
+            with slob.create(argv[2]) as s:
+                if len(argv) == 4:
+                    s.tag("label", argv[3])
+                for word, definition in entries:
+                    s.add(definition.encode("utf-8"), word, content_type="text/plain; charset=utf-8")
+        else:  # jargon file
+            for word, definition in entries:
+                print(f":{word}:{definition}")
 
 
 if __name__ == "__main__":

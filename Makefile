@@ -3,6 +3,7 @@ CONFIG_FILE = /etc/dict/dictd.conf
 DICTNAME = ozhegov
 DICTNAME_FULL = "Словарь Ожегова"
 DICTSOURCE = ${DICTNAME}.txt
+SLOB_FILE = ${DICTNAME}.slob
 
 define CONFIG
 database ${DICTNAME} {
@@ -12,8 +13,8 @@ database ${DICTNAME} {
 endef
 export CONFIG
 
-${DICTNAME}.index ${DICTNAME}.dict: ${DICTSOURCE} ozhegov-parse.py
-	python3 ozhegov-parse.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
+${DICTNAME}.index ${DICTNAME}.dict: ${DICTSOURCE} convert.py
+	python3 convert.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
 
 install: ${DICTNAME}.index ${DICTNAME}.dict
 	mkdir -p ${DESTDIR}
@@ -24,7 +25,13 @@ install: ${DICTNAME}.index ${DICTNAME}.dict
 uninstall:
 	rm -f ${DESTDIR}/${DICTNAME}.index ${DESTDIR}/${DICTNAME}.dict
 
+${SLOB_FILE} slob: ${DICTSOURCE} convert.py
+	rm -f ${SLOB_FILE}
+	python3 convert.py ${DICTSOURCE} ${SLOB_FILE} ${DICTNAME_FULL}
+
 clean:
-	rm -f ${DICTNAME}.dict ${DICTNAME}.index
+	rm -f ${DICTNAME}.dict ${DICTNAME}.index ${SLOB_FILE}
+
+.PHONY: install uninstall slob clean
 
 # end
