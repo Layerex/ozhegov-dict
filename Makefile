@@ -14,7 +14,7 @@ endef
 export CONFIG
 
 ${DICTNAME}.dict.dz: ${DICTNAME}.dict
-	dictzip ${DICTNAME}.dict
+	dictzip -f ${DICTNAME}.dict
 
 ${DICTNAME}.index ${DICTNAME}.dict: ${DICTSOURCE} convert.py
 	python3 convert.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
