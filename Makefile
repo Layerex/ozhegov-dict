@@ -13,9 +13,11 @@ database ${DICTNAME} {
 endef
 export CONFIG
 
-${DICTNAME}.index ${DICTNAME}.dict.dz: ${DICTSOURCE} convert.py
-	python3 convert.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
+${DICTNAME}.dict.dz: ${DICTNAME}.dict
 	dictzip ${DICTNAME}.dict
+
+${DICTNAME}.index ${DICTNAME}.dict: ${DICTSOURCE} convert.py
+	python3 convert.py ${DICTSOURCE} | dictfmt --utf8 --allchars -s ${DICTNAME_FULL} -j ${DICTNAME}
 
 install: ${DICTNAME}.index ${DICTNAME}.dict.dz
 	mkdir -p ${DESTDIR}
